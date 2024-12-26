@@ -8,6 +8,7 @@ import SunTimes from "./SunTimes";
 import AirQuality from "./AirQuality";
 import TemperatureChart from "./TempretureCharts";
 import SavedCities from "./SavedCity";
+import { useSettings } from "../../context/SettingsContext";
 
 const WeatherDashboard = () => {
   const [city, setCity] = useState("London");
@@ -18,6 +19,22 @@ const WeatherDashboard = () => {
     JSON.parse(localStorage.getItem("savedCities")) || []
   );
   const [loading, setLoading] = useState(true);
+  const { settings } = useSettings();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchWeatherData(city, settings.unit);
+        setWeatherData(data);
+      } catch (error) {
+        console.error("Error fetching weather data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [city, settings.unit]);
 
   const convertTemp = (temp) => {
     return unit === "F" ? (temp * 9) / 5 + 32 : temp;
@@ -36,9 +53,11 @@ const WeatherDashboard = () => {
   }, []);
 
   const handleSaveCity = () => {
-    const newSavedCities = [...savedCities, city];
-    setSavedCities(newSavedCities);
-    localStorage.setItem("savedCities", JSON.stringify(newSavedCities));
+    if (!savedCities.includes(city)) {
+      const newSavedCities = [...savedCities, city];
+      setSavedCities(newSavedCities);
+      localStorage.setItem("savedCities", JSON.stringify(newSavedCities));
+    }
   };
 
   const handleDeleteCity = (cityToDelete) => {
@@ -46,21 +65,6 @@ const WeatherDashboard = () => {
     setSavedCities(newSavedCities);
     localStorage.setItem("savedCities", JSON.stringify(newSavedCities));
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const data = await fetchWeatherData(city);
-        setWeatherData(data);
-      } catch (error) {
-        console.error("Error fetching weather data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [city]);
 
   if (loading) {
     return (
@@ -105,14 +109,14 @@ const WeatherDashboard = () => {
             forecastData={weatherData.forecast}
             convertTemp={convertTemp}
           />
+
+          <SavedCities
+            savedCities={savedCities}
+            onCitySelect={(city) => setCity(city)}
+            onCityDelete={handleDeleteCity}
+          />
         </div>
       )}
-
-      <SavedCities
-        savedCities={savedCities}
-        onCitySelect={(city) => setCity(city)}
-        onCityDelete={handleDeleteCity}
-      />
     </div>
   );
 };

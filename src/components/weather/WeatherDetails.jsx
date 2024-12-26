@@ -1,8 +1,10 @@
-// src/components/weather/WeatherDetails.jsx
 import { Wind, Droplets, Gauge, ThermometerSun } from "lucide-react";
 import PropTypes from "prop-types";
+import { useSettings } from "../../context/SettingsContext";
 
-const WeatherDetails = ({ weatherData, unit, convertTemp }) => {
+const WeatherDetails = ({ weatherData, convertTemp }) => {
+  const { settings } = useSettings(); // Get the settings context for unit
+
   return (
     <div className="p-6 rounded-xl bg-white/10 backdrop-blur-md border border-white/20">
       <h3 className="text-xl font-bold mb-4">Details</h3>
@@ -34,7 +36,9 @@ const WeatherDetails = ({ weatherData, unit, convertTemp }) => {
             <span>Feels like</span>
           </div>
           <span>
-            {convertTemp(weatherData.current.main.feels_like).toFixed(1)}°{unit}
+            {/* Convert temperature using the appropriate unit */}
+            {convertTemp(weatherData.current.main.feels_like).toFixed(1)}°
+            {settings.unit}
           </span>
         </div>
       </div>
@@ -44,8 +48,7 @@ const WeatherDetails = ({ weatherData, unit, convertTemp }) => {
 
 WeatherDetails.propTypes = {
   weatherData: PropTypes.object.isRequired,
-  unit: PropTypes.string.isRequired,
-  convertTemp: PropTypes.func.isRequired,
+  convertTemp: PropTypes.func.isRequired, // Ensure the temp conversion function is passed down
 };
 
 export default WeatherDetails;
