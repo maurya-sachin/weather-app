@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { LayoutDashboard, Moon, Settings2, Sun } from "lucide-react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
-import Dashboard from "./components/dashboard/Dashboard.jsx";
 import Setting from "./components/setting/Setting.jsx";
+import WeatherDashboard from "./components/weather/WeatherDashboard.jsx";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -70,7 +70,7 @@ function App() {
             </div>
           </div>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<WeatherDashboard />} />
             <Route path="/setting" element={<Setting />} />
           </Routes>
         </div>
