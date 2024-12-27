@@ -35,6 +35,7 @@ const WeatherDashboard = () => {
         },
         () => {
           alert("Unable to fetch your location");
+          setCity("Delhi"); // Set fallback city in the state
         }
       );
     }
@@ -49,13 +50,9 @@ const WeatherDashboard = () => {
         if (city) {
           // Fetch weather data based on city name
           data = await fetchWeatherData(city);
-        } else if (location.lat && location.lon) {
+        } else {
           // Fetch weather data based on geolocation
           data = await fetchWeatherData(location);
-        } else {
-          // Fallback to a default city (e.g., Delhi)
-          data = await fetchWeatherData("Delhi");
-          setCity("Delhi"); // Set fallback city in the state
         }
         setWeatherData(data);
       } catch (error) {
