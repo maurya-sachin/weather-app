@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
 import AQILevel from "./AQILevels";
 
 const AirQuality = ({ airQualityData }) => {
@@ -19,16 +18,15 @@ const AirQuality = ({ airQualityData }) => {
     return Math.round(sum / values.length); // Average AQI
   };
 
-  const [showMore, setShowMore] = useState(false);
   const averageAQI = calculateAverageAQI();
 
   return (
     <div
-      className="md:col-span-2 lg:col-span-1 p-6 rounded-xl 
+      className="md:col-span-2 p-6 rounded-xl 
   bg-gradient-to-br from-blue-50/90 to-white/90 
   dark:from-gray-900/90 dark:to-gray-800/90
   border border-white/20 dark:border-gray-700/30
-  backdrop-blur-lg"
+  backdrop-blur-lg "
     >
       <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">
         Air Quality

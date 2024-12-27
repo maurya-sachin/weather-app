@@ -7,8 +7,8 @@ const BASE_URL = "https://api.openweathermap.org/data/2.5";
 
 const cache = new Map();
 
-export const fetchWeatherData = async (city) => {
-  const cacheKey = `weather_${city}`;
+export const fetchWeatherData = async (cityOrCoords) => {
+  const cacheKey = `weather_${JSON.stringify(cityOrCoords)}`;
   if (cache.has(cacheKey)) {
     return cache.get(cacheKey);
   }
@@ -18,20 +18,40 @@ export const fetchWeatherData = async (city) => {
       throw new Error("API key is not configured");
     }
 
-    const [weather, forecast] = await Promise.all([
-      axios.get(`${BASE_URL}/weather?q=${city}&appid=${API_KEY}&units=metric`),
-      axios.get(`${BASE_URL}/forecast?q=${city}&appid=${API_KEY}&units=metric`),
-    ]);
+    // Check if cityOrCoords is an object with lat and lon properties (i.e., coordinates)
+    let weatherData, forecastData, airQualityData;
 
-    const { lat, lon } = weather.data.coord;
-    const airQuality = await axios.get(
-      `${BASE_URL}/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`
-    );
+    if (cityOrCoords.lat && cityOrCoords.lon) {
+      // Fetch data using lat and lon
+      const { lat, lon } = cityOrCoords;
+      weatherData = await axios.get(
+        `${BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+      );
+      forecastData = await axios.get(
+        `${BASE_URL}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+      );
+      airQualityData = await axios.get(
+        `${BASE_URL}/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+      );
+    } else {
+      // Fallback to using city name
+      const city = cityOrCoords;
+      weatherData = await axios.get(
+        `${BASE_URL}/weather?q=${city}&appid=${API_KEY}&units=metric`
+      );
+      forecastData = await axios.get(
+        `${BASE_URL}/forecast?q=${city}&appid=${API_KEY}&units=metric`
+      );
+      const { lat, lon } = weatherData.data.coord;
+      airQualityData = await axios.get(
+        `${BASE_URL}/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+      );
+    }
 
     const result = {
-      current: weather.data,
-      forecast: forecast.data,
-      airQuality: airQuality.data,
+      current: weatherData.data,
+      forecast: forecastData.data,
+      airQuality: airQualityData.data,
     };
     cache.set(cacheKey, result);
     console.log("Fetched weather data:", result);

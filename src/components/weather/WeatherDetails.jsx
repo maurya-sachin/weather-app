@@ -7,15 +7,15 @@ const WeatherDetails = ({ weatherData, convertTemp }) => {
 
   return (
     <div
-      className="p-6 rounded-xl 
+      className="md:col-span-2 p-6 rounded-xl 
   bg-gradient-to-br from-blue-50/90 to-white/90 
   dark:from-gray-900/90 dark:to-gray-800/90
   border border-white/20 dark:border-gray-700/30
-  backdrop-blur-lg"
+  backdrop-blur-lg "
       aria-label="Weather Details"
     >
       <h3 className="text-xl font-bold mb-4">Details</h3>
-      <div className="space-y-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div
           className="flex items-center justify-between p-3 rounded-lg 
   bg-gradient-to-br from-cyan-100 to-blue-200 

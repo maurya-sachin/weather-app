@@ -32,11 +32,11 @@ const TemperatureChart = ({ forecastData }) => {
 
   return (
     <div
-      className="md:col-span-3 lg:col-span-2 p-6 rounded-xl 
+      className="sm:col-span-2 md:col-span-4 lg:col-span-3 p-6 rounded-xl 
   bg-gradient-to-br from-blue-50/90 to-white/90 
   dark:from-gray-900/90 dark:to-gray-800/90
   border border-white/20 dark:border-gray-700/30
-  backdrop-blur-lg"
+  backdrop-blur-lg "
       aria-label="Temperature Forecast"
     >
       <h3 className="text-xl font-bold mb-4">Temperature Forecast</h3>
@@ -46,7 +46,6 @@ const TemperatureChart = ({ forecastData }) => {
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData}>
             {/* Adding grid lines for better readability */}
-            // For CartesianGrid
             <CartesianGrid
               stroke={settings.darkMode ? "#333" : "#e2e8f0"}
               strokeDasharray="3 3"

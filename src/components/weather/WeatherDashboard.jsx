@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, Suspense } from "react";
 import { debounce } from "lodash";
 import { fetchWeatherData, searchCities } from "../../utils/api";
 import SearchBar from "./SearchBar";
@@ -6,14 +6,15 @@ import CurrentWeather from "./CurrentWeather";
 import WeatherDetails from "./WeatherDetails";
 import SunTimes from "./SunTimes";
 import AirQuality from "./AirQuality";
-import { lazy, Suspense } from "react";
+import { lazy } from "react";
+import { useSettings } from "../../context/SettingsContext";
 const SavedCities = lazy(() => import("./SavedCity"));
 const TemperatureChart = lazy(() => import("./TempretureCharts"));
-import { useSettings } from "../../context/SettingsContext";
-import WeatherMap from "./WeatherMap";
+const WeatherMap = lazy(() => import("./WeatherMap"));
 const FiveDayForecast = lazy(() => import("./FiveDayForecast"));
+
 const WeatherDashboard = () => {
-  const [city, setCity] = useState("London");
+  const [city, setCity] = useState(""); // Start with an empty city
   const [unit, setUnit] = useState("C");
   const [weatherData, setWeatherData] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
@@ -21,13 +22,37 @@ const WeatherDashboard = () => {
     JSON.parse(localStorage.getItem("savedCities")) || []
   );
   const [loading, setLoading] = useState(true);
+  const [location, setLocation] = useState({ lat: null, lon: null }); // Geolocation state
   const { settings, convertTemp } = useSettings();
 
+  // Get user's geolocation if no city is selected
+  useEffect(() => {
+    if (!city && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLocation({ lat: latitude, lon: longitude });
+        },
+        () => {
+          alert("Unable to fetch your location");
+        }
+      );
+    }
+  }, [city]);
+
+  // Fetch weather data based on either city or geolocation
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await fetchWeatherData(city, settings.unit);
+        let data;
+        if (city) {
+          // Fetch weather data based on city name
+          data = await fetchWeatherData(city);
+        } else if (location.lat && location.lon) {
+          // Fetch weather data based on geolocation
+          data = await fetchWeatherData(location);
+        }
         setWeatherData(data);
       } catch (error) {
         console.error("Error fetching weather data:", error);
@@ -36,7 +61,7 @@ const WeatherDashboard = () => {
       }
     };
     fetchData();
-  }, [city, settings.unit]);
+  }, [city, location, settings.unit]);
 
   // Use useMemo to ensure debouncedSearch is created only once
   const debouncedSearch = useMemo(() => {
@@ -84,7 +109,7 @@ const WeatherDashboard = () => {
       />
 
       {weatherData && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4  gap-5">
           <CurrentWeather
             city={city}
             weatherData={weatherData}
@@ -92,9 +117,6 @@ const WeatherDashboard = () => {
             onUnitChange={setUnit}
             onSaveCity={handleSaveCity}
           />
-          <Suspense fallback={<div>Loading...</div>}>
-            <WeatherMap />
-          </Suspense>
 
           <WeatherDetails
             weatherData={weatherData}
@@ -102,9 +124,13 @@ const WeatherDashboard = () => {
             convertTemp={convertTemp}
           />
 
-          <SunTimes weatherData={weatherData} />
-
           <AirQuality airQualityData={weatherData.airQuality} />
+
+          <Suspense fallback={<div>Loading...</div>}>
+            <WeatherMap city={city} location={location} />
+          </Suspense>
+
+          <SunTimes weatherData={weatherData} />
 
           <Suspense fallback={<div>Loading...</div>}>
             <TemperatureChart forecastData={weatherData.forecast} />

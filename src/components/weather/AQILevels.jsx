@@ -30,6 +30,7 @@ const AQILevel = ({ aqi, aqiValue }) => {
 // Prop validation using PropTypes
 AQILevel.propTypes = {
   aqi: PropTypes.oneOf([1, 2, 3, 4, 5]).isRequired,
+  aqiValue: PropTypes.number.isRequired,
 };
 
 export default AQILevel;

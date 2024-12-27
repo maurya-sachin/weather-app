@@ -5,11 +5,11 @@ import { format } from "date-fns";
 const SunTimes = ({ weatherData }) => {
   return (
     <div
-      className="p-6 rounded-xl 
+      className="order-1 lg:order-none md:col-span-2 lg:col-span-1 p-6 rounded-xl 
   bg-gradient-to-br from-blue-50/90 to-white/90 
   dark:from-gray-900/90 dark:to-gray-800/90
   border border-white/20 dark:border-gray-700/30
-  backdrop-blur-lg"
+  backdrop-blur-lg "
     >
       <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">
         Sun Times

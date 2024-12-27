@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 import { useSettings } from "../../context/SettingsContext";
@@ -6,7 +5,7 @@ import { useSettings } from "../../context/SettingsContext";
 const FiveDayForecast = ({ forecastData }) => {
   const { convertTemp, settings } = useSettings();
 
-  const days = forecastData.list.reduce((acc, curr, index) => {
+  const days = forecastData.list.reduce((acc, curr) => {
     const date = new Date(curr.dt * 1000);
     const day = format(date, "EEEE"); // Get the day of the week (e.g., Monday)
 
@@ -36,13 +35,13 @@ const FiveDayForecast = ({ forecastData }) => {
 
   return (
     <div
-      className="md:col-span-3 p-6 rounded-xl 
+      className="sm:col-span-2 md:col-span-4  lg:col-span-3 p-6 rounded-xl 
   bg-gradient-to-br from-blue-50/90 to-white/90 
   dark:from-gray-900/90 dark:to-gray-800/90
   border border-white/20 dark:border-gray-700/30
-  backdrop-blur-lg"
+  backdrop-blur-lg "
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {Object.entries(days).map(([day, data]) => (
           <div
             key={day}
@@ -52,7 +51,7 @@ const FiveDayForecast = ({ forecastData }) => {
   hover:shadow-lg hover:scale-[1.02] hover:border-blue-200/30 dark:hover:border-blue-500/30
   backdrop-blur-md
   transition-all duration-300 ease-in-out
-  cursor-pointer"
+  cursor-pointer "
           >
             <div className="data">
               <h4 className="text-lg font-semibold">{day}</h4>

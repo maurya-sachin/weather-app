@@ -7,13 +7,13 @@ const CurrentWeather = ({ city, weatherData, onSaveCity }) => {
 
   return (
     <div
-      className="md:col-span-2 lg:col-span-1 p-6 rounded-xl 
+      className="md:col-span-2 p-6 rounded-xl 
   bg-gradient-to-br from-blue-50/90 to-white/90 
   dark:from-gray-900/90 dark:to-gray-800/90
   border border-white/20 dark:border-gray-700/30
   backdrop-blur-lg"
     >
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold">{city}</h2>
           <span className="text-4xl font-semibold">
@@ -63,7 +63,7 @@ const CurrentWeather = ({ city, weatherData, onSaveCity }) => {
         </div>
       </div>
 
-      <div className="flex justify-between text-sm">
+      <div className="flex justify-between text-sm mt-5">
         <div
           className="p-4 rounded-lg  bg-gradient-to-br from-yellow-100 to-orange-200 
   dark:from-purple-700 dark:to-pink-500
