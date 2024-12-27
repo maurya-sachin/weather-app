@@ -3,40 +3,37 @@ import { useSettings } from "../../context/SettingsContext";
 
 // src/components/weather/CurrentWeather.jsx
 const CurrentWeather = ({ city, weatherData, onSaveCity }) => {
-  const { settings, toggleUnit } = useSettings(); // Get the settings context for unit
+  const { settings, toggleUnit } = useSettings();
 
   const convertTemp = (temp) => {
     return settings.unit === "F" ? (temp * 9) / 5 + 32 : temp;
   };
 
   return (
-    <div
-      className="col-span-1 md:col-span-2 lg:col-span-3 p-6 rounded-xl bg-white/10 backdrop-blur-md border border-white/20"
-      aria-label="Current Weather"
-    >
+    <div className="p-6 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 space-y-4">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold">{city}</h2>
-          <div className="flex items-center gap-4">
-            <span className="text-6xl font-bold">
+          <div className="flex items-center gap-2 mt-2">
+            <span className="text-4xl font-semibold">
               {convertTemp(weatherData.current.main.temp).toFixed(1)}°
               {settings.unit}
             </span>
             <img
               src={`https://openweathermap.org/img/wn/${weatherData.current.weather[0].icon}@2x.png`}
               alt={weatherData.current.weather[0].description}
-              className="w-16 h-16"
+              className="w-12 h-12"
               loading="lazy"
             />
           </div>
-          <p className="text-xl mt-2 capitalize">
+          <p className="text-lg mt-2 capitalize">
             {weatherData.current.weather[0].description}
           </p>
         </div>
-        <div className="mt-4 md:mt-0">
+        <div className="flex flex-col items-center gap-2">
           <button
             onClick={onSaveCity}
-            className="mb-4 px-6 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors"
+            className="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors"
           >
             Save City
           </button>
@@ -58,6 +55,23 @@ const CurrentWeather = ({ city, weatherData, onSaveCity }) => {
               °F
             </button>
           </div>
+        </div>
+      </div>
+
+      <div className="flex justify-between text-sm text-gray-400">
+        <div>
+          <p className="text-sm">Min Temp</p>
+          <p className="text-lg">
+            {convertTemp(weatherData.current.main.temp_min).toFixed(1)}°
+            {settings.unit}
+          </p>
+        </div>
+        <div>
+          <p className="text-sm">Max Temp</p>
+          <p className="text-lg">
+            {convertTemp(weatherData.current.main.temp_max).toFixed(1)}°
+            {settings.unit}
+          </p>
         </div>
       </div>
     </div>

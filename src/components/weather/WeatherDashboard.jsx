@@ -10,6 +10,7 @@ import { lazy, Suspense } from "react";
 const SavedCities = lazy(() => import("./SavedCity"));
 const TemperatureChart = lazy(() => import("./TempretureCharts"));
 import { useSettings } from "../../context/SettingsContext";
+import WeatherMap from "./WeatherMap";
 
 const WeatherDashboard = () => {
   const [city, setCity] = useState("London");
@@ -95,6 +96,9 @@ const WeatherDashboard = () => {
             onUnitChange={setUnit}
             onSaveCity={handleSaveCity}
           />
+          <Suspense fallback={<div>Loading...</div>}>
+            <WeatherMap />
+          </Suspense>
 
           <WeatherDetails
             weatherData={weatherData}
@@ -107,14 +111,14 @@ const WeatherDashboard = () => {
           <AirQuality airQualityData={weatherData.airQuality} />
 
           <Suspense fallback={<div>Loading...</div>}>
+            <TemperatureChart
+              forecastData={weatherData.forecast}
+              convertTemp={convertTemp}
+            />
             <SavedCities
               savedCities={savedCities}
               onCitySelect={(city) => setCity(city)}
               onCityDelete={handleDeleteCity}
-            />
-            <TemperatureChart
-              forecastData={weatherData.forecast}
-              convertTemp={convertTemp}
             />
           </Suspense>
         </div>

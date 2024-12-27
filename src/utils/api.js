@@ -34,6 +34,7 @@ export const fetchWeatherData = async (city) => {
       airQuality: airQuality.data,
     };
     cache.set(cacheKey, result);
+    console.log("Fetched weather data:", result);
     return result;
   } catch (error) {
     console.error("API Error:", error.response?.data || error.message);

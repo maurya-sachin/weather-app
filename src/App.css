@@ -1,0 +1,7 @@
+:root {
+  --text-color: #2f2f2f; /* Dark text for light mode */
+}
+
+[data-theme="dark"] {
+  --text-color: #e5e7eb; /* Light text for dark mode */
+}

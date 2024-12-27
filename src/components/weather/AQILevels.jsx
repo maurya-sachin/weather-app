@@ -1,7 +1,7 @@
 // src/components/weather/AQILevel.jsx
 import PropTypes from "prop-types";
 
-const AQILevel = ({ aqi }) => {
+const AQILevel = ({ aqi, aqiValue }) => {
   const levels = {
     1: { text: "Good", color: "bg-green-500" },
     2: { text: "Fair", color: "bg-yellow-500" },
@@ -18,6 +18,7 @@ const AQILevel = ({ aqi }) => {
         aria-label={`AQI level ${level.text}`}
       />
       <span>{level.text}</span>
+      <span className="text-sm">({aqiValue})</span>
     </div>
   );
 };
