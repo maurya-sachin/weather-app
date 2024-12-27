@@ -10,7 +10,11 @@ const SearchBar = ({ onSearch, searchResults, onCitySelect }) => {
         placeholder="Search for a city..."
         onChange={(e) => onSearch(e.target.value)}
         aria-label="Search for a city"
-        className="w-full p-4 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 text-gray-900 dark:text-white placeholder-gray-500"
+        className="w-full p-5 rounded-xl 
+  bg-gradient-to-br from-blue-50/90 to-white/90 
+  dark:from-gray-900/90 dark:to-gray-800/90
+  border border-white/20 dark:border-gray-700/30
+  backdrop-blur-lg"
       />
       {searchResults.length > 0 && (
         <div

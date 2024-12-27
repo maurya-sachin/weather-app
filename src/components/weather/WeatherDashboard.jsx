@@ -11,7 +11,7 @@ const SavedCities = lazy(() => import("./SavedCity"));
 const TemperatureChart = lazy(() => import("./TempretureCharts"));
 import { useSettings } from "../../context/SettingsContext";
 import WeatherMap from "./WeatherMap";
-
+const FiveDayForecast = lazy(() => import("./FiveDayForecast"));
 const WeatherDashboard = () => {
   const [city, setCity] = useState("London");
   const [unit, setUnit] = useState("C");
@@ -21,7 +21,7 @@ const WeatherDashboard = () => {
     JSON.parse(localStorage.getItem("savedCities")) || []
   );
   const [loading, setLoading] = useState(true);
-  const { settings } = useSettings();
+  const { settings, convertTemp } = useSettings();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,10 +37,6 @@ const WeatherDashboard = () => {
     };
     fetchData();
   }, [city, settings.unit]);
-
-  const convertTemp = (temp) => {
-    return unit === "F" ? (temp * 9) / 5 + 32 : temp;
-  };
 
   // Use useMemo to ensure debouncedSearch is created only once
   const debouncedSearch = useMemo(() => {
@@ -111,10 +107,9 @@ const WeatherDashboard = () => {
           <AirQuality airQualityData={weatherData.airQuality} />
 
           <Suspense fallback={<div>Loading...</div>}>
-            <TemperatureChart
-              forecastData={weatherData.forecast}
-              convertTemp={convertTemp}
-            />
+            <TemperatureChart forecastData={weatherData.forecast} />
+
+            <FiveDayForecast forecastData={weatherData.forecast} />
             <SavedCities
               savedCities={savedCities}
               onCitySelect={(city) => setCity(city)}

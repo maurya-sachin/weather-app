@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 // src/components/weather/SavedCities.jsx
 const SavedCities = ({ savedCities, onCitySelect, onCityDelete }) => {
   return (
-    <div className="p-6 rounded-xl bg-white/10 backdrop-blur-md border border-white/20">
+    <div className="md:col-span-3 p-6 rounded-xl bg-gray-200 backdrop-blur-md border border-white/20 dark:bg-gradient-to-br dark:from-gray-800 dark:via-gray-700 dark:to-gray-900">
       <h3 className="text-xl font-bold mb-4">Saved Cities</h3>
       <div className="space-y-2">
         {savedCities.map((savedCity) => (

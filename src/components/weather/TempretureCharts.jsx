@@ -14,8 +14,8 @@ import { format } from "date-fns";
 import { useSettings } from "../../context/SettingsContext";
 import { useEffect } from "react";
 
-const TemperatureChart = ({ forecastData, convertTemp }) => {
-  const { settings, updateSettings } = useSettings();
+const TemperatureChart = ({ forecastData }) => {
+  const { settings, convertTemp } = useSettings();
 
   useEffect(() => {
     // Apply dark mode globally based on context
@@ -32,7 +32,11 @@ const TemperatureChart = ({ forecastData, convertTemp }) => {
 
   return (
     <div
-      className="lg:col-span-2 p-6 rounded-xl bg-white/10 backdrop-blur-md border border-white/20"
+      className="md:col-span-3 lg:col-span-2 p-6 rounded-xl 
+  bg-gradient-to-br from-blue-50/90 to-white/90 
+  dark:from-gray-900/90 dark:to-gray-800/90
+  border border-white/20 dark:border-gray-700/30
+  backdrop-blur-lg"
       aria-label="Temperature Forecast"
     >
       <h3 className="text-xl font-bold mb-4">Temperature Forecast</h3>
@@ -42,8 +46,11 @@ const TemperatureChart = ({ forecastData, convertTemp }) => {
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData}>
             {/* Adding grid lines for better readability */}
-            <CartesianGrid stroke="#333" strokeDasharray="5 5" />
-
+            // For CartesianGrid
+            <CartesianGrid
+              stroke={settings.darkMode ? "#333" : "#e2e8f0"}
+              strokeDasharray="3 3"
+            />
             {/* X and Y axis with dynamic color based on the theme */}
             <XAxis
               dataKey="time"
@@ -63,19 +70,19 @@ const TemperatureChart = ({ forecastData, convertTemp }) => {
               tickLine={false}
               axisLine={{ stroke: "#555" }}
             />
-
             {/* Custom Tooltips with vibrant background */}
             <Tooltip
               contentStyle={{
-                background: "linear-gradient(135deg, #6EE7B7, #3B82F6)", // Gradient background
+                background: settings.darkMode ? "#1f2937" : "white",
                 borderRadius: "8px",
                 padding: "10px",
-                boxShadow: "0px 5px 10px rgba(0,0,0,0.2)",
+                border: "1px solid",
+                borderColor: settings.darkMode ? "#374151" : "#e5e7eb",
+                boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
               }}
               labelFormatter={(value) => `Time: ${value}`}
               formatter={(value) => [`${value}°C`, "Temperature"]}
             />
-
             {/* Gradient Line for the temperature data */}
             <defs>
               <linearGradient
@@ -85,8 +92,14 @@ const TemperatureChart = ({ forecastData, convertTemp }) => {
                 x2="100%"
                 y2="0%"
               >
-                <stop offset="0%" stopColor="#3b82f6" />
-                <stop offset="100%" stopColor="#9333ea" />
+                <stop
+                  offset="0%"
+                  stopColor={settings.darkMode ? "#60a5fa" : "#3b82f6"}
+                />
+                <stop
+                  offset="100%"
+                  stopColor={settings.darkMode ? "#818cf8" : "#6366f1"}
+                />
               </linearGradient>
             </defs>
             <Line
@@ -101,7 +114,6 @@ const TemperatureChart = ({ forecastData, convertTemp }) => {
               animationEasing="ease-in-out" // Smooth easing function
               style={{ filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.3))" }} // Adding subtle shadow to the line
             />
-
             {/* Legend (optional, if you have multiple series) */}
             <Legend
               wrapperStyle={{
@@ -120,7 +132,6 @@ const TemperatureChart = ({ forecastData, convertTemp }) => {
 
 TemperatureChart.propTypes = {
   forecastData: PropTypes.object.isRequired,
-  convertTemp: PropTypes.func.isRequired,
 };
 
 export default TemperatureChart;

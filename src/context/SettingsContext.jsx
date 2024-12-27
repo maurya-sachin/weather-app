@@ -16,9 +16,9 @@ export const SettingsProvider = ({ children }) => {
     updateSettings({ ...settings, unit: newUnit });
   };
 
-  useEffect(() => {
-    applyTheme(settings.darkMode);
-  }, [settings.darkMode]);
+  const convertTemp = (temp) => {
+    return settings.unit === "F" ? (temp * 9) / 5 + 32 : temp;
+  };
 
   const updateSettings = (newSettings) => {
     setSettings(newSettings);
@@ -27,8 +27,14 @@ export const SettingsProvider = ({ children }) => {
     applyTheme(newSettings.darkMode);
   };
 
+  useEffect(() => {
+    applyTheme(settings.darkMode);
+  }, [settings.darkMode]);
+
   return (
-    <SettingsContext.Provider value={{ settings, updateSettings, toggleUnit }}>
+    <SettingsContext.Provider
+      value={{ settings, updateSettings, toggleUnit, convertTemp }}
+    >
       {children}
     </SettingsContext.Provider>
   );
