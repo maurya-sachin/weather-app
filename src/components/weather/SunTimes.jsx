@@ -10,7 +10,7 @@ const SunTimes = ({ weatherData }) => {
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <Sunrise className="w-5 h-5 mr-2" />
+            <Sunrise className="w-5 h-5 mr-2" aria-label="Sunrise icon" />
             <span>Sunrise</span>
           </div>
           <span>
@@ -19,7 +19,7 @@ const SunTimes = ({ weatherData }) => {
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <Sunset className="w-5 h-5 mr-2" />
+            <Sunset className="w-5 h-5 mr-2" aria-label="Sunset icon" />
             <span>Sunset</span>
           </div>
           <span>

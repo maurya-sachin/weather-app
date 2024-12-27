@@ -13,7 +13,10 @@ const AQILevel = ({ aqi }) => {
 
   return (
     <div className="flex items-center gap-2">
-      <div className={`w-3 h-3 rounded-full ${level.color}`} />
+      <div
+        className={`w-3 h-3 rounded-full ${level.color}`}
+        aria-label={`AQI level ${level.text}`}
+      />
       <span>{level.text}</span>
     </div>
   );

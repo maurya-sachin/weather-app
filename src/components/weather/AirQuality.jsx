@@ -11,25 +11,37 @@ const AirQuality = ({ airQualityData }) => {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <p className="text-sm text-gray-400">PM2.5</p>
-            <p className="text-lg">
+            <p
+              className="text-lg"
+              aria-label={`PM2.5 level ${airQualityData.list[0].components.pm2_5} μg/m³`}
+            >
               {airQualityData.list[0].components.pm2_5} μg/m³
             </p>
           </div>
           <div>
             <p className="text-sm text-gray-400">PM10</p>
-            <p className="text-lg">
+            <p
+              className="text-lg"
+              aria-label={`PM10 level ${airQualityData.list[0].components.pm10} μg/m³`}
+            >
               {airQualityData.list[0].components.pm10} μg/m³
             </p>
           </div>
           <div>
             <p className="text-sm text-gray-400">NO₂</p>
-            <p className="text-lg">
+            <p
+              className="text-lg"
+              aria-label={`NO₂ level ${airQualityData.list[0].components.no2} μg/m³`}
+            >
               {airQualityData.list[0].components.no2} μg/m³
             </p>
           </div>
           <div>
             <p className="text-sm text-gray-400">O₃</p>
-            <p className="text-lg">
+            <p
+              className="text-lg"
+              aria-label={`O₃ level ${airQualityData.list[0].components.o3} μg/m³`}
+            >
               {airQualityData.list[0].components.o3} μg/m³
             </p>
           </div>

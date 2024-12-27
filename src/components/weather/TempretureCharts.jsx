@@ -21,7 +21,10 @@ const TemperatureChart = ({ forecastData, convertTemp }) => {
   }));
 
   return (
-    <div className="lg:col-span-2 p-6 rounded-xl bg-white/10 backdrop-blur-md border border-white/20">
+    <div
+      className="lg:col-span-2 p-6 rounded-xl bg-white/10 backdrop-blur-md border border-white/20"
+      aria-label="Temperature Forecast"
+    >
       <h3 className="text-xl font-bold mb-4">Temperature Forecast</h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
@@ -49,7 +52,10 @@ const TemperatureChart = ({ forecastData, convertTemp }) => {
             This chart shows temperature forecasts for the next 8 hours.
           </p>
         </ResponsiveContainer>
-        <button onClick={toggleUnit} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg">
+        <button
+          onClick={toggleUnit}
+          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
+        >
           Toggle Unit
         </button>
       </div>

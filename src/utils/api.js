@@ -5,7 +5,14 @@ import axios from "axios";
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY?.replace(/['"]/g, "");
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 
+const cache = new Map();
+
 export const fetchWeatherData = async (city) => {
+  const cacheKey = `weather_${city}`;
+  if (cache.has(cacheKey)) {
+    return cache.get(cacheKey);
+  }
+
   try {
     if (!API_KEY) {
       throw new Error("API key is not configured");
@@ -21,11 +28,13 @@ export const fetchWeatherData = async (city) => {
       `${BASE_URL}/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`
     );
 
-    return {
+    const result = {
       current: weather.data,
       forecast: forecast.data,
       airQuality: airQuality.data,
     };
+    cache.set(cacheKey, result);
+    return result;
   } catch (error) {
     console.error("API Error:", error.response?.data || error.message);
     throw new Error("Failed to fetch weather data");
@@ -50,4 +59,8 @@ export const searchCities = async (query) => {
     console.error("Search Error:", error.response?.data || error.message);
     return [];
   }
+};
+
+export const clearCache = () => {
+  cache.clear();
 };

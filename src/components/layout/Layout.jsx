@@ -37,11 +37,12 @@ function Layout() {
             <button
               className="p-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/20"
               onClick={toggleDarkMode}
+              aria-label="Toggle dark mode"
             >
               {settings.darkMode ? (
-                <Sun className="w-6 h-6 text-white" />
+                <Sun className="w-6 h-6 text-white" loading="lazy" />
               ) : (
-                <Moon className="w-6 h-6 text-black" />
+                <Moon className="w-6 h-6 text-black" loading="lazy" />
               )}
             </button>
             <Link
@@ -52,6 +53,8 @@ function Layout() {
                 className={`w-6 h-6 ${
                   settings.darkMode ? "text-white" : "text-black"
                 }`}
+                loading="lazy"
+                aria-label="Dashboard"
               />
             </Link>
             <Link
@@ -62,6 +65,8 @@ function Layout() {
                 className={`w-6 h-6 ${
                   settings.darkMode ? "text-white" : "text-black"
                 }`}
+                loading="lazy"
+                aria-label="Settings"
               />
             </Link>
           </div>

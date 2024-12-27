@@ -21,7 +21,7 @@ const Setting = () => {
   };
 
   return (
-    <div className="p-6 max-w-2xl mx-auto">
+    <div className="p-6 max-w-2xl mx-auto" aria-label="Settings">
       <div className="rounded-xl bg-white/10 backdrop-blur-md border border-white/20 overflow-hidden">
         <div className="p-6">
           <h2 className="text-2xl font-bold mb-2">Settings</h2>
@@ -35,9 +35,9 @@ const Setting = () => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   {settings.darkMode ? (
-                    <Moon className="w-5 h-5" />
+                    <Moon className="w-5 h-5" loading="lazy" />
                   ) : (
-                    <Sun className="w-5 h-5" />
+                    <Sun className="w-5 h-5" loading="lazy" />
                   )}
                   <span className="font-medium">Theme</span>
                 </div>
@@ -62,7 +62,7 @@ const Setting = () => {
             {/* Temperature Unit Section */}
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
-                <ThermometerSun className="w-5 h-5" />
+                <ThermometerSun className="w-5 h-5" loading="lazy" />
                 <span className="font-medium">Temperature Unit</span>
               </div>
               <div className="flex space-x-4">

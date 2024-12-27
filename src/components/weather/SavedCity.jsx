@@ -20,6 +20,7 @@ const SavedCities = ({ savedCities, onCitySelect, onCityDelete }) => {
             <button
               onClick={() => onCityDelete(savedCity)}
               className="text-red-500 hover:text-red-600"
+              aria-label={`Delete ${savedCity}`}
             >
               Delete
             </button>

@@ -7,7 +7,7 @@ function App() {
   return (
     <Router>
       <SettingsProvider>
-        <Layout />
+        <Layout lang="en" />
       </SettingsProvider>
     </Router>
   );

@@ -6,33 +6,36 @@ const WeatherDetails = ({ weatherData, convertTemp }) => {
   const { settings, toggleUnit } = useSettings(); // Get the settings context for unit
 
   return (
-    <div className="p-6 rounded-xl bg-white/10 backdrop-blur-md border border-white/20">
+    <div
+      className="p-6 rounded-xl bg-white/10 backdrop-blur-md border border-white/20"
+      aria-label="Weather Details"
+    >
       <h3 className="text-xl font-bold mb-4">Details</h3>
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <Wind className="w-5 h-5 mr-2" />
+            <Wind className="w-5 h-5 mr-2" loading="lazy" />
             <span>Wind</span>
           </div>
           <span>{weatherData.current.wind.speed} m/s</span>
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <Droplets className="w-5 h-5 mr-2" />
+            <Droplets className="w-5 h-5 mr-2" loading="lazy" />
             <span>Humidity</span>
           </div>
           <span>{weatherData.current.main.humidity}%</span>
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <Gauge className="w-5 h-5 mr-2" />
+            <Gauge className="w-5 h-5 mr-2" loading="lazy" />
             <span>Pressure</span>
           </div>
           <span>{weatherData.current.main.pressure} hPa</span>
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <ThermometerSun className="w-5 h-5 mr-2" />
+            <ThermometerSun className="w-5 h-5 mr-2" loading="lazy" />
             <span>Feels like</span>
           </div>
           <span>
@@ -41,7 +44,10 @@ const WeatherDetails = ({ weatherData, convertTemp }) => {
             {settings.unit}
           </span>
         </div>
-        <button onClick={toggleUnit} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg">
+        <button
+          onClick={toggleUnit}
+          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
+        >
           Toggle Unit
         </button>
       </div>
