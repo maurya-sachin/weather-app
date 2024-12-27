@@ -2,8 +2,11 @@ import { useState } from "react";
 import { Loader2, AlertCircle, Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import { supabase } from "../../supabase"; // Ensure you have this imported
+import { FaGoogle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -63,7 +66,7 @@ const Login = () => {
     setFieldError(updatedError);
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     const validationErrors = {
@@ -80,8 +83,55 @@ const Login = () => {
       return;
     }
 
-    setLoading(false);
-    toast.success("Logged in successfully!");
+    setLoading(true);
+    try {
+      // Call Supabase's signIn method
+      const { user, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        console.error("Login Error:", error.message);
+        setError(error.message);
+        toast.error(`Error: ${error.message}`);
+      } else {
+        console.log("Login Success:", user);
+        toast.success("Logged in successfully!");
+        navigate("/"); // Redirect to dashboard after login
+      }
+    } catch (err) {
+      console.error("Unexpected Error:", err);
+      setError("An unexpected error occurred. Please try again.");
+      toast.error("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    try {
+      // Initiate Google login with Supabase
+      const { user, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+      });
+
+      if (error) {
+        setError(error.message);
+        toast.error(error.message);
+      } else {
+        console.log("Google login success:", user);
+        toast.success("Logged in successfully with Google!");
+        navigate("/"); // Redirect to dashboard after login
+      }
+    } catch (err) {
+      console.error("Error during Google login:", err);
+      setError("An unexpected error occurred. Please try again.");
+      toast.error("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -166,7 +216,25 @@ const Login = () => {
               "Login"
             )}
           </button>
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            disabled={loading}
+            className="w-full rounded-lg p-3 bg-red-600 text-white flex items-center justify-center space-x-2 hover:bg-red-700 disabled:bg-red-300 transition-colors"
+          >
+            {loading ? (
+              <div className="flex items-center justify-center">
+                <span>Logging in with Google...</span>
+              </div>
+            ) : (
+              <>
+                <FaGoogle size={20} />
+                <span>Login with Google</span>
+              </>
+            )}
+          </button>
         </form>
+
         <div>
           <p className="mt-4 text-center text-sm text-gray-600 dark:text-gray-300">
             Don&apos;t have an account?{" "}

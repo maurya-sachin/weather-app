@@ -2,8 +2,12 @@ import { useState } from "react";
 import { Loader2, AlertCircle, Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { supabase } from "../../supabase";
+import { FaGoogle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -87,7 +91,7 @@ const Signup = () => {
     }));
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     const validationErrors = {
@@ -110,10 +114,69 @@ const Signup = () => {
     }
 
     setLoading(true);
-    setTimeout(() => {
+    try {
+      // Call Supabase's signUp method
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            displayName: `${formData.firstName} ${formData.lastName}`, // Optional full name
+          },
+        },
+      });
       setLoading(false);
-      toast.success("Signed up successfully!");
-    }, 1000); // Simulated signup logic
+
+      if (error) {
+        console.error("Supabase SignUp Error:", error.message);
+        setError(error.message);
+        toast.error(`Error: ${error.message}`);
+      } else {
+        console.log("Supabase SignUp Success:", data);
+        toast.success("Signed up successfully!");
+        navigate("/"); // Redirect to dashboard  sign-up
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
+      }
+    } catch (err) {
+      console.error("Unexpected Error:", err);
+      setError("An unexpected error occurred. Please try again.");
+      toast.error("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignUp = async () => {
+    setLoading(true);
+    try {
+      // Initiate Google sign-up with Supabase
+      const { user, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+      });
+
+      if (error) {
+        setError(error.message);
+        toast.error(error.message);
+      } else {
+        console.log("Google sign-up success:", user);
+        toast.success("Signed up successfully with Google!");
+        navigate("/"); // Redirect to dashboard  sign-up
+      }
+    } catch (err) {
+      console.error("Error during Google sign-up:", err);
+      setError("An unexpected error occurred. Please try again.");
+      toast.error("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -220,7 +283,6 @@ const Signup = () => {
               <p className="text-red-500 text-sm">{fieldError.password}</p>
             )}
           </div>
-
           <div>
             <div className="relative">
               <input
@@ -257,7 +319,6 @@ const Signup = () => {
               </p>
             )}
           </div>
-
           <button
             type="submit"
             disabled={loading}
@@ -270,6 +331,23 @@ const Signup = () => {
               </div>
             ) : (
               "Sign Up"
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={handleGoogleSignUp}
+            disabled={loading}
+            className="w-full rounded-lg p-3 bg-red-600 text-white flex items-center justify-center space-x-2 hover:bg-red-700 disabled:bg-red-300 transition-colors"
+          >
+            {loading ? (
+              <div className="flex items-center justify-center">
+                <span>Signing up with Google...</span>
+              </div>
+            ) : (
+              <>
+                <FaGoogle size={20} /> {/* Use the Google icon here */}
+                <span>Sign Up with Google</span>
+              </>
             )}
           </button>
         </form>

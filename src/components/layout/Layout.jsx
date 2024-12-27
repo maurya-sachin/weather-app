@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import {
   LayoutDashboard,
+  LogIn,
   Moon,
   Settings2,
   Sun,
@@ -13,8 +14,10 @@ import { useSettings } from "../../context/SettingsContext.jsx";
 import WeatherDashboard from "../weather/WeatherDashboard.jsx";
 import Setting from "../setting/Setting.jsx";
 import { ToastContainer } from "react-toastify";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 function Layout() {
+  const { user, logout } = useAuth();
   const { settings, updateSettings } = useSettings();
 
   useEffect(() => {
@@ -74,16 +77,27 @@ function Layout() {
                 title="Settings"
               />
             </Link>
-            <Link
-              to="/login"
-              className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 border border-gray-300 shadow-sm dark:bg-white/10 dark:border-white/20 dark:shadow-md transition-all text-gray-800 dark:text-white"
-            >
-              <UserCircle2Icon
-                className="w-6 h-6"
-                aria-label="Login and Sign Up"
-                title="Login/Signup"
-              />
-            </Link>
+            {!user ? (
+              <Link
+                to="/login"
+                className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 border border-gray-300 shadow-sm dark:bg-white/10 dark:border-white/20 dark:shadow-md transition-all text-gray-800 dark:text-white"
+              >
+                <UserCircle2Icon
+                  className="w-6 h-6"
+                  aria-label="Login and Sign Up"
+                  title="Login/Signup"
+                />
+              </Link>
+            ) : (
+              <button
+                onClick={logout}
+                className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 border border-gray-300 shadow-sm dark:bg-white/10 dark:border-white/20 dark:shadow-md transition-all text-gray-800 dark:text-white"
+                aria-label="Logout"
+                title="Logout"
+              >
+                <LogIn className="w-6 h-6" aria-label="Logout" title="Logout" />
+              </button>
+            )}
           </div>
         </div>
         <Routes>
