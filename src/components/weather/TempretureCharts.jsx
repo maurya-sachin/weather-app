@@ -20,7 +20,7 @@ const TemperatureChart = ({ forecastData, convertTemp }) => {
       <h3 className="text-xl font-bold mb-4">Temperature Forecast</h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={chartData}>
+          <LineChart data={chartData} aria-hidden="true">
             <XAxis dataKey="time" tick={{ fill: "currentColor" }} />
             <YAxis tick={{ fill: "currentColor" }} />
             <Tooltip
@@ -39,6 +39,9 @@ const TemperatureChart = ({ forecastData, convertTemp }) => {
               dot={{ fill: "#3b82f6" }}
             />
           </LineChart>
+          <p className="sr-only">
+            This chart shows temperature forecasts for the next 8 hours.
+          </p>
         </ResponsiveContainer>
       </div>
     </div>

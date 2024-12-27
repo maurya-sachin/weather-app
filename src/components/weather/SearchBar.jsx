@@ -9,22 +9,36 @@ const SearchBar = ({ onSearch, searchResults, onCitySelect }) => {
         type="text"
         placeholder="Search for a city..."
         onChange={(e) => onSearch(e.target.value)}
+        aria-label="Search for a city"
         className="w-full p-4 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 text-gray-900 dark:text-white placeholder-gray-500"
       />
       {searchResults.length > 0 && (
-        <div className="absolute w-full mt-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-lg z-10">
-          {searchResults.map((result) => (
-            <div
-              key={`${result.name}-${result.country}`}
-              onClick={() => onCitySelect(result.name)}
-              className="p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
-            >
-              <div className="flex items-center">
-                <MapPin className="w-4 h-4 mr-2" />
-                {result.name}, {result.country}
+        <div
+          className="absolute w-full mt-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-lg z-10"
+          role="listbox"
+        >
+          {searchResults.map((result) => {
+            const regex = new RegExp(searchQuery, "gi");
+            const highlightedName = result.name.replace(
+              regex,
+              (match) => `<span class="bg-yellow-300">${match}</span>`
+            );
+            return (
+              <div
+                key={`${result.name}-${result.country}`}
+                dangerouslySetInnerHTML={{ __html: highlightedName }}
+                onClick={() => onCitySelect(result.name)}
+                className="p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                role="option"
+                aria-selected="false"
+              >
+                <div className="flex items-center">
+                  <MapPin className="w-4 h-4 mr-2" />
+                  {result.name}, {result.country}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
