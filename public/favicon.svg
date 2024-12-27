@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#2563eb"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Base Circle -->
+  <circle cx="256" cy="256" r="256" fill="url(#bg-gradient)"/>
+  
+  <!-- Weather Icon -->
+  <g transform="translate(96,96) scale(1.25)">
+    <!-- Sun -->
+    <circle cx="128" cy="128" r="64" fill="#fcd34d"/>
+    
+    <!-- Cloud -->
+    <path d="M256 192c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64s28.7-64 64-64h128c35.3 0 64 28.7 64 64z" fill="#f3f4f6" fill-opacity="0.95"/>
+    <path d="M224 144c0 35.3-28.7 64-64 64H32c-35.3 0-64-28.7-64-64s28.7-64 64-64h128c35.3 0 64 28.7 64 64z" fill="#f3f4f6"/>
+  </g>
+</svg>

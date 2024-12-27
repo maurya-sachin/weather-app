@@ -1,4 +1,3 @@
-
 # Weather Dashboard 🌤️
 
 A modern and responsive weather application built with React, Vite, and Tailwind CSS. This app leverages the OpenWeatherMap API to provide users with real-time weather updates, forecasts, air quality data, and more.
@@ -34,6 +33,7 @@ A modern and responsive weather application built with React, Vite, and Tailwind
 Follow these steps to set up the project locally:
 
 1. **Clone the Repository**:
+
    ```bash
    git clone https://github.com/your-username/weather-dashboard.git
    cd weather-dashboard
@@ -41,24 +41,28 @@ Follow these steps to set up the project locally:
 
 2. **Install Dependencies**:
    Make sure you have Node.js installed, then run:
+
    ```bash
    npm install
    ```
 
 3. **Environment Variables**:
    Create a `.env` file in the project root and add your OpenWeatherMap API key:
+
    ```env
    VITE_OPENWEATHER_API_KEY=your_api_key_here
    ```
 
 4. **Run the Development Server**:
    Start the development server to view the app in your browser:
+
    ```bash
    npm run dev
    ```
 
 5. **Build for Production**:
    Create an optimized production build:
+
    ```bash
    npm run build
    ```
@@ -105,4 +109,3 @@ This project is licensed under the MIT License. See the LICENSE file for details
 - [OpenWeatherMap API](https://openweathermap.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Lucide Icons](https://lucide.dev/)
-
