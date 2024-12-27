@@ -1,111 +1,129 @@
-# Weather Dashboard 🌤️
+# WeatherAffair: A Modern Weather Application
 
-A modern and responsive weather application built with React, Vite, and Tailwind CSS. This app leverages the OpenWeatherMap API to provide users with real-time weather updates, forecasts, air quality data, and more.
+## Overview
 
-## Features ✨
+WeatherAffair is a modern weather application built with React, Vite, and Tailwind CSS. It provides users with accurate and real-time weather data, intuitive visualizations, and essential information like air quality, sunrise/sunset timings, and more. This project exemplifies my expertise in creating responsive, high-performance web applications with clean, accessible, and user-friendly designs.
 
-- **Current Weather**: Displays current weather conditions, temperature, and location-specific details.
-- **7-Day Forecast**: View the upcoming weather trends.
-- **Temperature Chart**: Interactive graphical representation of temperature trends.
-- **Air Quality Data**: Provides information about air quality and pollution levels.
-- **Sunrise & Sunset Times**: Displays accurate sunrise and sunset times for any location.
-- **Search with Autosuggest**: Smart city search with suggestions.
-- **Weather Maps**: Integrates geolocation-based weather maps.
-- **Dark Mode**: Toggle between light and dark themes.
-- **Unit Conversion**: Switch between Celsius and Fahrenheit for temperature readings.
-- **Save Favorite Cities**: Save and manage frequently viewed locations.
-- **Settings Panel**: Customize app preferences, including units and themes.
+## Key Features
 
----
+- **Real-time Weather Data**:
+  Displays temperature, feels-like temperature, wind speed, humidity, pressure, and UV index.
+- **7-Day Weather Forecast**:
+  Offers a detailed forecast for the next seven days.
+- **Interactive Temperature Charts**:
+  Visualizes temperature trends over time.
+- **Air Quality Data**:
+  Includes detailed air quality information where available.
+- **Sunrise & Sunset Times**:
+  Provides accurate daily timings for sunrise and sunset.
+- **City Search with Auto-Suggestions**:
+  Allows users to quickly search for and view weather data for any location.
+- **Weather Maps**:
+  Powered by Leaflet.js for an interactive view of weather patterns.
+- **Customizable Settings**:
 
-## Tech Stack 🛠️
+  - Light and dark mode support for better readability.
+  - Temperature display in Celsius or Fahrenheit.
+  - Option to save favorite cities for quick access.
 
-- **Frontend**: React, Vite, Tailwind CSS
-- **Icons**: Lucide React
-- **API**: OpenWeatherMap API
+- **PWA Features**:
+  - Installable as a Progressive Web App for offline use.
+  - Service workers enhance performance and caching capabilities.
+
+## Technologies Used
+
+- **Frontend**: React, Vite
+- **Styling**: Tailwind CSS
 - **State Management**: React Context API
-- **Utilities**: Lodash for debouncing
+- **Mapping**: Leaflet.js
+- **Icons**: Lucide React
+- **Utilities**: Lodash, date-fns
+- **API**: OpenWeatherMap for fetching real-time weather and forecast data
 
----
+## Project Structure
 
-## Installation 🚀
+```
+weather-affair/
+├── src/
+│   ├── assets/        # Static assets like images/icons
+│   ├── components/    # Reusable React components
+│   │   ├── AirQuality.jsx
+│   │   ├── CurrentWeather.jsx
+│   │   ├── SearchBar.jsx
+│   │   ├── SavedCities.jsx
+│   │   ├── SunTimes.jsx
+│   │   ├── TemperatureChart.jsx
+│   │   └── WeatherDetails.jsx
+│   ├── context/       # Context API for global state management
+│   │   └── SettingsContext.jsx
+│   ├── utils/         # Helper functions and API handlers
+│   │   ├── api.js
+│   │   └── helpers.js
+│   └── App.jsx        # Main app component
+├── public/
+│   └── index.html
+├── .env
+├── package.json
+├── tailwind.config.js
+├── vite.config.js
+├── README.md
+└── ... (other files)
+```
 
-Follow these steps to set up the project locally:
+## Installation & Usage
 
-1. **Clone the Repository**:
+1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/your-username/weather-dashboard.git
-   cd weather-dashboard
+   git clone https://github.com/maurya-sachin/weather-app.git
+   cd weather-app
    ```
 
-2. **Install Dependencies**:
-   Make sure you have Node.js installed, then run:
+2. **Install Dependencies:**
 
    ```bash
    npm install
    ```
 
-3. **Environment Variables**:
-   Create a `.env` file in the project root and add your OpenWeatherMap API key:
+3. **Create a `.env` file**:
+   Add your OpenWeatherMap API key in a `.env` file at the root of the project:
 
    ```env
    VITE_OPENWEATHER_API_KEY=your_api_key_here
    ```
 
-4. **Run the Development Server**:
-   Start the development server to view the app in your browser:
+4. **Run the Application in Development Mode:**
 
    ```bash
    npm run dev
    ```
 
-5. **Build for Production**:
-   Create an optimized production build:
+5. **Build for Production:**
 
    ```bash
    npm run build
    ```
 
-6. **Preview Production Build**:
-   Test the production build locally:
+6. **Preview the Production Build:**
    ```bash
    npm run preview
    ```
 
----
+## Contributing
 
-## File Structure 🗂️
+Contributions are welcome! If you’d like to improve this project, feel free to submit a pull request or open an issue.
 
-```
-src/
-├── assets/               # Static assets like images/icons
-├── components/           # Reusable React components
-│   ├── AirQuality.jsx
-│   ├── CurrentWeather.jsx
-│   ├── SearchBar.jsx
-│   ├── SavedCities.jsx
-│   ├── SunTimes.jsx
-│   ├── TemperatureChart.jsx
-│   └── WeatherDetails.jsx
-├── context/              # Context API for global state management
-│   └── SettingsContext.jsx
-├── utils/                # Helper functions and API handlers
-│   ├── api.js
-│   └── helpers.js
-└── App.jsx               # Main app component
-```
+## Acknowledgments
+
+- [OpenWeatherMap API](https://openweathermap.org/) for providing weather data.
+- [Tailwind CSS](https://tailwindcss.com/) for styling.
+- [Lucide React](https://lucide.dev/) for icons.
+- [Leaflet.js](https://leafletjs.com/) for interactive mapping.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for more details.
 
 ---
 
-## License 📜
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-
----
-
-## Acknowledgments 🙌
-
-- [OpenWeatherMap API](https://openweathermap.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Lucide Icons](https://lucide.dev/)
+**WeatherAffair** – Your reliable companion for weather insights and forecasts.

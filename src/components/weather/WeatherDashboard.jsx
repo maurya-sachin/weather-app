@@ -22,7 +22,7 @@ const WeatherDashboard = () => {
     JSON.parse(localStorage.getItem("savedCities")) || []
   );
   const [loading, setLoading] = useState(true);
-  const [location, setLocation] = useState({ lat: null, lon: null }); // Geolocation state
+  const [location, setLocation] = useState({ lat: null, lon: null });
   const { settings, convertTemp } = useSettings();
 
   // Get user's geolocation if no city is selected
@@ -52,6 +52,10 @@ const WeatherDashboard = () => {
         } else if (location.lat && location.lon) {
           // Fetch weather data based on geolocation
           data = await fetchWeatherData(location);
+        } else {
+          // Fallback to a default city (e.g., Delhi)
+          data = await fetchWeatherData("Delhi");
+          setCity("Delhi"); // Set fallback city in the state
         }
         setWeatherData(data);
       } catch (error) {
