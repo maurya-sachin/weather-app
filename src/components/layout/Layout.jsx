@@ -1,9 +1,18 @@
 import { useEffect } from "react";
-import { LayoutDashboard, Moon, Settings2, Sun } from "lucide-react";
+import {
+  LayoutDashboard,
+  Moon,
+  Settings2,
+  Sun,
+  UserCircle2Icon,
+} from "lucide-react";
+import Login from "../auth/Login.jsx";
+import Signup from "../auth/Signup.jsx";
 import { Routes, Route, Link } from "react-router-dom";
 import { useSettings } from "../../context/SettingsContext.jsx";
 import WeatherDashboard from "../weather/WeatherDashboard.jsx";
 import Setting from "../setting/Setting.jsx";
+import { ToastContainer } from "react-toastify";
 
 function Layout() {
   const { settings, updateSettings } = useSettings();
@@ -59,14 +68,31 @@ function Layout() {
               to="/setting"
               className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 border border-gray-300 shadow-sm dark:bg-white/10 dark:border-white/20 dark:shadow-md transition-all text-gray-800 dark:text-white"
             >
-              <Settings2 className="w-6 h-6" aria-label="Settings" />
+              <Settings2
+                className="w-6 h-6"
+                aria-label="Settings"
+                title="Settings"
+              />
+            </Link>
+            <Link
+              to="/login"
+              className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 border border-gray-300 shadow-sm dark:bg-white/10 dark:border-white/20 dark:shadow-md transition-all text-gray-800 dark:text-white"
+            >
+              <UserCircle2Icon
+                className="w-6 h-6"
+                aria-label="Login and Sign Up"
+                title="Login/Signup"
+              />
             </Link>
           </div>
         </div>
         <Routes>
           <Route path="/" element={<WeatherDashboard />} />
           <Route path="/setting" element={<Setting />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
+        <ToastContainer />
       </div>
     </div>
   );
