@@ -1,6 +1,7 @@
 // src/context/SettingsContext.jsx
 import PropTypes from "prop-types";
 import { createContext, useContext, useState, useEffect } from "react";
+import { applyTheme } from "../utils/theme";
 
 const SettingsContext = createContext();
 
@@ -18,16 +19,6 @@ export const SettingsProvider = ({ children }) => {
   useEffect(() => {
     applyTheme(settings.darkMode);
   }, [settings.darkMode]);
-
-  const applyTheme = (isDark) => {
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-      document.body.classList.add("dark:bg-gray-900", "dark:text-white");
-    } else {
-      document.documentElement.classList.remove("dark");
-      document.body.classList.remove("dark:bg-gray-900", "dark:text-white");
-    }
-  };
 
   const updateSettings = (newSettings) => {
     setSettings(newSettings);

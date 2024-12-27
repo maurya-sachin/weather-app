@@ -1,14 +1,22 @@
 // src/components/weather/SearchBar.jsx
 import { MapPin } from "lucide-react";
 import PropTypes from "prop-types";
+import { useState } from "react";
 
 const SearchBar = ({ onSearch, searchResults, onCitySelect }) => {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    onSearch(query);
+  };
+
   return (
     <div className="relative mb-6">
       <input
         type="text"
         placeholder="Search for a city..."
-        onChange={(e) => onSearch(e.target.value)}
+        onChange={(e) => handleSearch(e.target.value)}
         aria-label="Search for a city"
         className="w-full p-4 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 text-gray-900 dark:text-white placeholder-gray-500"
       />

@@ -10,11 +10,8 @@ import {
   Brush,
 } from "recharts";
 import { format } from "date-fns";
-import { useSettings } from "../../context/SettingsContext"; // Import the useSettings hook
 
 const TemperatureChart = ({ forecastData, convertTemp }) => {
-  const { settings, toggleUnit } = useSettings(); // Get the settings context for unit
-
   const chartData = forecastData.list.slice(0, 8).map((item) => ({
     time: format(new Date(item.dt * 1000), "p"),
     temp: convertTemp(item.main.temp),

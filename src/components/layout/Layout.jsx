@@ -29,11 +29,12 @@ function Layout() {
       } bg-gradient-to-br from-gray-200 via-gray-300 to-gray-400 text-gray-800 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-black dark:text-gray-100`}
     >
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center py-4 relative">
-          <h1 className="text-3xl font-bold text-blue-500">
-            Weather Dashboard
-          </h1>
-          <div className="controls flex flex-col gap-2 absolute right-0 top-5">
+        <div className="flex flex-col sm:flex-row justify-between items-center py-4 relative">
+          <div className="mb-3 sm:mb-0 text-center sm:text-left">
+            <h1 className="text-3xl font-bold text-blue-500">WeatherAffair</h1>
+            <span>Your Personal Weather Companion</span>
+          </div>
+          <div className="controls flex xl:flex-col gap-2 xl:absolute right-0 top-5 z-10">
             <button
               className="p-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/20"
               onClick={toggleDarkMode}
