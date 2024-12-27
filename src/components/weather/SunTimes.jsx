@@ -1,6 +1,7 @@
 // src/components/weather/SunTimes.jsx
 import { Sunrise, Sunset } from "lucide-react";
 import PropTypes from "prop-types";
+import { format } from "date-fns";
 
 const SunTimes = ({ weatherData }) => {
   return (
@@ -13,9 +14,7 @@ const SunTimes = ({ weatherData }) => {
             <span>Sunrise</span>
           </div>
           <span>
-            {new Date(
-              weatherData.current.sys.sunrise * 1000
-            ).toLocaleTimeString()}
+            {format(new Date(weatherData.current.sys.sunrise * 1000), "p")}
           </span>
         </div>
         <div className="flex items-center justify-between">
@@ -24,9 +23,7 @@ const SunTimes = ({ weatherData }) => {
             <span>Sunset</span>
           </div>
           <span>
-            {new Date(
-              weatherData.current.sys.sunset * 1000
-            ).toLocaleTimeString()}
+            {format(new Date(weatherData.current.sys.sunset * 1000), "p")}
           </span>
         </div>
       </div>

@@ -6,8 +6,9 @@ import CurrentWeather from "./CurrentWeather";
 import WeatherDetails from "./WeatherDetails";
 import SunTimes from "./SunTimes";
 import AirQuality from "./AirQuality";
-import TemperatureChart from "./TempretureCharts";
-import SavedCities from "./SavedCity";
+import { lazy, Suspense } from "react";
+const SavedCities = lazy(() => import("./SavedCity"));
+const TemperatureChart = lazy(() => import("./TempretureCharts"));
 import { useSettings } from "../../context/SettingsContext";
 
 const WeatherDashboard = () => {
@@ -105,16 +106,17 @@ const WeatherDashboard = () => {
 
           <AirQuality airQualityData={weatherData.airQuality} />
 
-          <TemperatureChart
-            forecastData={weatherData.forecast}
-            convertTemp={convertTemp}
-          />
-
-          <SavedCities
-            savedCities={savedCities}
-            onCitySelect={(city) => setCity(city)}
-            onCityDelete={handleDeleteCity}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <SavedCities
+              savedCities={savedCities}
+              onCitySelect={(city) => setCity(city)}
+              onCityDelete={handleDeleteCity}
+            />
+            <TemperatureChart
+              forecastData={weatherData.forecast}
+              convertTemp={convertTemp}
+            />
+          </Suspense>
         </div>
       )}
     </div>

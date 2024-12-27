@@ -10,15 +10,14 @@ export const SettingsProvider = ({ children }) => {
     unit: localStorage.getItem("unit") || "C",
   });
 
-  // Load settings on mount
+  const toggleUnit = () => {
+    const newUnit = settings.unit === "C" ? "F" : "C";
+    updateSettings({ ...settings, unit: newUnit });
+  };
+
   useEffect(() => {
-    const savedSettings = {
-      darkMode: localStorage.getItem("darkMode") === "true",
-      unit: localStorage.getItem("unit") || "C",
-    };
-    setSettings(savedSettings);
-    applyTheme(savedSettings.darkMode);
-  }, []);
+    applyTheme(settings.darkMode);
+  }, [settings.darkMode]);
 
   const applyTheme = (isDark) => {
     if (isDark) {
@@ -38,7 +37,7 @@ export const SettingsProvider = ({ children }) => {
   };
 
   return (
-    <SettingsContext.Provider value={{ settings, updateSettings }}>
+    <SettingsContext.Provider value={{ settings, updateSettings, toggleUnit }}>
       {children}
     </SettingsContext.Provider>
   );

@@ -7,11 +7,16 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
+  Brush,
 } from "recharts";
+import { format } from "date-fns";
+import { useSettings } from "../../context/SettingsContext"; // Import the useSettings hook
 
 const TemperatureChart = ({ forecastData, convertTemp }) => {
+  const { settings, toggleUnit } = useSettings(); // Get the settings context for unit
+
   const chartData = forecastData.list.slice(0, 8).map((item) => ({
-    time: new Date(item.dt * 1000).toLocaleTimeString(),
+    time: format(new Date(item.dt * 1000), "p"),
     temp: convertTemp(item.main.temp),
   }));
 
@@ -23,6 +28,7 @@ const TemperatureChart = ({ forecastData, convertTemp }) => {
           <LineChart data={chartData} aria-hidden="true">
             <XAxis dataKey="time" tick={{ fill: "currentColor" }} />
             <YAxis tick={{ fill: "currentColor" }} />
+            <Brush />
             <Tooltip
               contentStyle={{
                 backgroundColor: "rgba(255, 255, 255, 0.1)",
@@ -43,6 +49,9 @@ const TemperatureChart = ({ forecastData, convertTemp }) => {
             This chart shows temperature forecasts for the next 8 hours.
           </p>
         </ResponsiveContainer>
+        <button onClick={toggleUnit} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg">
+          Toggle Unit
+        </button>
       </div>
     </div>
   );

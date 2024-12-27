@@ -2,7 +2,7 @@ import { Moon, Sun, ThermometerSun } from "lucide-react";
 import { useSettings } from "../../context/SettingsContext";
 
 const Setting = () => {
-  const { settings, updateSettings } = useSettings();
+  const { settings, updateSettings, toggleUnit } = useSettings();
 
   const handleToggleDarkMode = () => {
     updateSettings({ ...settings, darkMode: !settings.darkMode });
