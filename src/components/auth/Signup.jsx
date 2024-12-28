@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Loader2, AlertCircle, Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { supabase } from "../../supabase";
 import { FaGoogle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -26,6 +28,12 @@ const Signup = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
   const toggleConfirmPasswordVisibility = () =>
@@ -187,7 +195,10 @@ const Signup = () => {
         </h2>
         <form onSubmit={handleSignup} className="space-y-4">
           {error && (
-            <div className="rounded-md bg-red-50 p-4 text-sm text-red-500">
+            <div
+              className="rounded-md bg-red-50 p-4 text-sm text-red-500"
+              role="alert"
+            >
               <AlertCircle className="inline-block mr-2" /> {error}
             </div>
           )}
@@ -201,6 +212,7 @@ const Signup = () => {
                 onChange={handleChange}
                 onFocus={() => handleBlur("firstName")}
                 aria-label="First Name"
+                aria-describedby={fieldError.firstName ? "firstName-error" : ""}
                 disabled={loading}
                 className={`w-full rounded-lg border p-3 outline-none focus:ring-2 dark:bg-gray-800 ${
                   fieldError.firstName
@@ -209,7 +221,9 @@ const Signup = () => {
                 }`}
               />
               {fieldError.firstName && (
-                <p className="text-red-500 text-sm">{fieldError.firstName}</p>
+                <p id="firstName-error" className="text-red-500 text-sm">
+                  {fieldError.firstName}
+                </p>
               )}
             </div>
             <div className="w-full">
@@ -221,6 +235,7 @@ const Signup = () => {
                 onChange={handleChange}
                 onFocus={() => handleBlur("lastName")}
                 aria-label="Last Name"
+                aria-describedby={fieldError.lastName ? "lastName-error" : ""}
                 disabled={loading}
                 className={`w-full rounded-lg border p-3 outline-none focus:ring-2 dark:bg-gray-800 ${
                   fieldError.lastName
@@ -229,7 +244,9 @@ const Signup = () => {
                 }`}
               />
               {fieldError.lastName && (
-                <p className="text-red-500 text-sm">{fieldError.lastName}</p>
+                <p id="lastName-error" className="text-red-500 text-sm">
+                  {fieldError.lastName}
+                </p>
               )}
             </div>
           </div>
@@ -242,6 +259,7 @@ const Signup = () => {
               onChange={handleChange}
               onFocus={() => handleBlur("email")}
               aria-label="Email"
+              aria-describedby={fieldError.email ? "email-error" : ""}
               disabled={loading}
               className={`w-full rounded-lg border p-3 outline-none focus:ring-2 dark:bg-gray-800 ${
                 fieldError.email
@@ -250,7 +268,9 @@ const Signup = () => {
               }`}
             />
             {fieldError.email && (
-              <p className="text-red-500 text-sm">{fieldError.email}</p>
+              <p id="email-error" className="text-red-500 text-sm">
+                {fieldError.email}
+              </p>
             )}
           </div>
           <div>
@@ -263,6 +283,7 @@ const Signup = () => {
                 onChange={handleChange}
                 onFocus={() => handleBlur("password")}
                 aria-label="Password"
+                aria-describedby={fieldError.password ? "password-error" : ""}
                 disabled={loading}
                 className={`w-full rounded-lg border p-3 pr-10 outline-none focus:ring-2 dark:bg-gray-800 ${
                   fieldError.password
@@ -280,7 +301,9 @@ const Signup = () => {
               </button>
             </div>
             {fieldError.password && (
-              <p className="text-red-500 text-sm">{fieldError.password}</p>
+              <p id="password-error" className="text-red-500 text-sm">
+                {fieldError.password}
+              </p>
             )}
           </div>
           <div>
@@ -293,6 +316,9 @@ const Signup = () => {
                 onChange={handleChange}
                 onFocus={() => handleBlur("confirmPassword")}
                 aria-label="Confirm Password"
+                aria-describedby={
+                  fieldError.confirmPassword ? "confirmPassword-error" : ""
+                }
                 disabled={loading}
                 className={`w-full rounded-lg border p-3 pr-10 outline-none focus:ring-2 dark:bg-gray-800 ${
                   fieldError.confirmPassword
@@ -314,7 +340,7 @@ const Signup = () => {
               </button>
             </div>
             {fieldError.confirmPassword && (
-              <p className="text-red-500 text-sm">
+              <p id="confirmPassword-error" className="text-red-500 text-sm">
                 {fieldError.confirmPassword}
               </p>
             )}
@@ -323,6 +349,7 @@ const Signup = () => {
             type="submit"
             disabled={loading}
             className="w-full rounded-lg bg-blue-500 p-3 text-white transition-colors hover:bg-blue-600 disabled:bg-blue-300"
+            aria-label="Sign Up"
           >
             {loading ? (
               <div className="flex items-center justify-center">
@@ -338,6 +365,7 @@ const Signup = () => {
             onClick={handleGoogleSignUp}
             disabled={loading}
             className="w-full rounded-lg p-3 bg-red-600 text-white flex items-center justify-center space-x-2 hover:bg-red-700 disabled:bg-red-300 transition-colors"
+            aria-label="Sign Up with Google"
           >
             {loading ? (
               <div className="flex items-center justify-center">

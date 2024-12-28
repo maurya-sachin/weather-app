@@ -22,21 +22,21 @@ function Layout() {
 
   useEffect(() => {
     // Apply dark mode globally based on context
-    if (settings.darkMode) {
+    if (settings.darkmode) {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
-  }, [settings.darkMode]);
+  }, [settings.darkmode]);
 
   const toggleDarkMode = () => {
-    updateSettings({ ...settings, darkMode: !settings.darkMode });
+    updateSettings({ ...settings, darkmode: !settings.darkmode });
   };
 
   return (
     <div
       className={`min-h-screen transition-colors duration-200 ${
-        settings.darkMode ? "dark" : ""
+        settings.darkmode ? "dark" : ""
       } bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 text-gray-800 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-black dark:text-gray-100`}
     >
       <div className="container mx-auto px-4">
@@ -49,55 +49,66 @@ function Layout() {
               Your Personal Weather Companion
             </span>
           </div>
-          <div className="controls flex xl:flex-col gap-2 xl:absolute right-0 top-5 z-10">
-            <button
-              className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 border border-gray-300 shadow-sm dark:bg-white/10 dark:border-white/20 dark:shadow-md transition-all"
-              onClick={toggleDarkMode}
-              aria-label="Toggle dark mode"
-            >
-              {settings.darkMode ? (
-                <Sun className="w-6 h-6 text-yellow-500" loading="lazy" />
-              ) : (
-                <Moon className="w-6 h-6 text-gray-700" loading="lazy" />
-              )}
-            </button>
-            <Link
-              to="/"
-              className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 border border-gray-300 shadow-sm dark:bg-white/10 dark:border-white/20 dark:shadow-md transition-all text-gray-800 dark:text-white"
-            >
-              <LayoutDashboard className="w-6 h-6" aria-label="Dashboard" />
-            </Link>
-            <Link
-              to="/setting"
-              className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 border border-gray-300 shadow-sm dark:bg-white/10 dark:border-white/20 dark:shadow-md transition-all text-gray-800 dark:text-white"
-            >
-              <Settings2
-                className="w-6 h-6"
-                aria-label="Settings"
-                title="Settings"
-              />
-            </Link>
-            {!user ? (
-              <Link
-                to="/login"
-                className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 border border-gray-300 shadow-sm dark:bg-white/10 dark:border-white/20 dark:shadow-md transition-all text-gray-800 dark:text-white"
-              >
-                <UserCircle2Icon
-                  className="w-6 h-6"
-                  aria-label="Login and Sign Up"
-                  title="Login/Signup"
-                />
-              </Link>
-            ) : (
-              <button
-                onClick={logout}
-                className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 border border-gray-300 shadow-sm dark:bg-white/10 dark:border-white/20 dark:shadow-md transition-all text-gray-800 dark:text-white"
-                aria-label="Logout"
-                title="Logout"
-              >
-                <LogIn className="w-6 h-6" aria-label="Logout" title="Logout" />
-              </button>
-            )}
+          <div className="controls xl:absolute right-0 top-5 z-10">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start">
+              <div className="w-32 flex items-center justify-between break-words whitespace-break-spaces te">
+                {!user ? (
+                  <></>
+                ) : (
+                  <>
+                    <span className="p-2 text-gray-800 dark:text-white">
+                      {user.user_metadata?.displayName || user.email}
+                    </span>
+                  </>
+                )}
+              </div>
+              <div className="flex lg:flex-col gap-2 items-center ">
+                {!user ? (
+                  <Link
+                    to="/login"
+                    className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 border border-gray-300 shadow-sm dark:bg-white/10 dark:border-white/20 dark:shadow-md transition-all text-gray-800 dark:text-white"
+                    aria-label="Login and Sign Up"
+                  >
+                    <UserCircle2Icon className="w-6 h-6" />
+                  </Link>
+                ) : (
+                  <>
+                    <button
+                      onClick={logout}
+                      className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 border border-gray-300 shadow-sm dark:bg-white/10 dark:border-white/20 dark:shadow-md transition-all text-gray-800 dark:text-white"
+                      aria-label="Logout"
+                    >
+                      <LogIn className="w-6 h-6" />
+                    </button>
+                  </>
+                )}
+                <button
+                  className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 border border-gray-300 shadow-sm dark:bg-white/10 dark:border-white/20 dark:shadow-md transition-all"
+                  onClick={toggleDarkMode}
+                  aria-label="Toggle dark mode"
+                >
+                  {settings.darkmode ? (
+                    <Sun className="w-6 h-6 text-yellow-500" loading="lazy" />
+                  ) : (
+                    <Moon className="w-6 h-6 text-gray-700" loading="lazy" />
+                  )}
+                </button>
+                <Link
+                  to="/"
+                  className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 border border-gray-300 shadow-sm dark:bg-white/10 dark:border-white/20 dark:shadow-md transition-all text-gray-800 dark:text-white"
+                  aria-label="Dashboard"
+                >
+                  <LayoutDashboard className="w-6 h-6" />
+                </Link>
+                <Link
+                  to="/setting"
+                  className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 border border-gray-300 shadow-sm dark:bg-white/10 dark:border-white/20 dark:shadow-md transition-all text-gray-800 dark:text-white"
+                  aria-label="Settings"
+                >
+                  <Settings2 className="w-6 h-6" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
         <Routes>

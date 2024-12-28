@@ -5,7 +5,7 @@ const Setting = () => {
   const { settings, updateSettings } = useSettings();
 
   const handleToggleDarkMode = () => {
-    updateSettings({ ...settings, darkMode: !settings.darkMode });
+    updateSettings({ ...settings, darkmode: !settings.darkmode });
   };
 
   const handleUnitChange = (newUnit) => {
@@ -13,11 +13,14 @@ const Setting = () => {
   };
 
   const handleReset = () => {
-    updateSettings({
-      darkMode: false,
-      unit: "C", // Reset unit to Celsius
-      language: "en",
-    });
+    const defaultSettings = {
+      darkmode: false,
+      unit: "C",
+      savedcities: [],
+    };
+
+    // Update settings in context and save to DB
+    updateSettings(defaultSettings);
   };
 
   return (
@@ -34,7 +37,7 @@ const Setting = () => {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                  {settings.darkMode ? (
+                  {settings.darkmode ? (
                     <Moon className="w-5 h-5" loading="lazy" />
                   ) : (
                     <Sun className="w-5 h-5" loading="lazy" />
@@ -44,18 +47,18 @@ const Setting = () => {
                 <button
                   onClick={handleToggleDarkMode}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${
-                    settings.darkMode ? "bg-blue-600" : "bg-gray-400"
+                    settings.darkmode ? "bg-blue-600" : "bg-gray-400"
                   }`}
                 >
                   <span
                     className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-300 ${
-                      settings.darkMode ? "translate-x-6" : "translate-x-1"
+                      settings.darkmode ? "translate-x-6" : "translate-x-1"
                     }`}
                   />
                 </button>
               </div>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                {settings.darkMode ? "Dark mode enabled" : "Light mode enabled"}
+                {settings.darkmode ? "Dark mode enabled" : "Light mode enabled"}
               </p>
             </div>
 

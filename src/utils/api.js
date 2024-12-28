@@ -1,7 +1,6 @@
-// src/utils/api.js
+// api.js
 import axios from "axios";
 
-// Remove quotes from the API key value
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY?.replace(/['"]/g, "");
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 
@@ -18,7 +17,6 @@ export const fetchWeatherData = async (cityOrCoords) => {
       throw new Error("API key is not configured");
     }
 
-    // Check if cityOrCoords is an object with lat and lon properties (i.e., coordinates)
     let weatherData, forecastData, airQualityData;
 
     if (cityOrCoords.lat && cityOrCoords.lon) {
@@ -67,7 +65,6 @@ export const searchCities = async (query) => {
     if (!API_KEY) {
       throw new Error("API key is not configured");
     }
-
     const response = await axios.get(
       `${BASE_URL}/find?q=${query}&type=like&appid=${API_KEY}`
     );

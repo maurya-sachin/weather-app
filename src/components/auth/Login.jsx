@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Loader2, AlertCircle, Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { supabase } from "../../supabase"; // Ensure you have this imported
 import { FaGoogle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext.jsx";
+
 const Login = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,6 +19,12 @@ const Login = () => {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -142,7 +151,10 @@ const Login = () => {
         </h2>
         <form onSubmit={handleLogin} className="space-y-4">
           {error && (
-            <div className="rounded-md bg-red-50 p-4 text-sm text-red-500">
+            <div
+              className="rounded-md bg-red-50 p-4 text-sm text-red-500"
+              role="alert"
+            >
               <AlertCircle className="inline-block mr-2" /> {error}
             </div>
           )}
@@ -180,6 +192,7 @@ const Login = () => {
                 onBlur={() => validateFieldAndUpdateError("password", password)}
                 disabled={loading}
                 aria-label="Password input field"
+                aria-describedby={fieldError.password ? "password-error" : ""}
                 className={`w-full rounded-lg border p-3 pr-10 outline-none focus:ring-2 dark:bg-gray-800 ${
                   fieldError.password
                     ? "border-red-500 focus:ring-red-500"

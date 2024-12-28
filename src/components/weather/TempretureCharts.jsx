@@ -19,12 +19,12 @@ const TemperatureChart = ({ forecastData }) => {
 
   useEffect(() => {
     // Apply dark mode globally based on context
-    if (settings.darkMode) {
+    if (settings.darkmode) {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
-  }, [settings.darkMode]);
+  }, [settings.darkmode]);
   const chartData = forecastData.list.slice(0, 8).map((item) => ({
     time: format(new Date(item.dt * 1000), "p"),
     temp: convertTemp(item.main.temp),
@@ -47,14 +47,14 @@ const TemperatureChart = ({ forecastData }) => {
           <LineChart data={chartData}>
             {/* Adding grid lines for better readability */}
             <CartesianGrid
-              stroke={settings.darkMode ? "#333" : "#e2e8f0"}
+              stroke={settings.darkmode ? "#333" : "#e2e8f0"}
               strokeDasharray="3 3"
             />
             {/* X and Y axis with dynamic color based on the theme */}
             <XAxis
               dataKey="time"
               tick={{
-                fill: settings.darkMode ? "#e5e7eb" : "#2f2f2f",
+                fill: settings.darkmode ? "#e5e7eb" : "#2f2f2f",
               }}
               tickLine={false}
               axisLine={{ stroke: "#555" }} // Darker axis line color
@@ -64,7 +64,7 @@ const TemperatureChart = ({ forecastData }) => {
             />
             <YAxis
               tick={{
-                fill: settings.darkMode ? "#e5e7eb" : "#2f2f2f",
+                fill: settings.darkmode ? "#e5e7eb" : "#2f2f2f",
               }}
               tickLine={false}
               axisLine={{ stroke: "#555" }}
@@ -72,11 +72,11 @@ const TemperatureChart = ({ forecastData }) => {
             {/* Custom Tooltips with vibrant background */}
             <Tooltip
               contentStyle={{
-                background: settings.darkMode ? "#1f2937" : "white",
+                background: settings.darkmode ? "#1f2937" : "white",
                 borderRadius: "8px",
                 padding: "10px",
                 border: "1px solid",
-                borderColor: settings.darkMode ? "#374151" : "#e5e7eb",
+                borderColor: settings.darkmode ? "#374151" : "#e5e7eb",
                 boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
               }}
               labelFormatter={(value) => `Time: ${value}`}
@@ -93,11 +93,11 @@ const TemperatureChart = ({ forecastData }) => {
               >
                 <stop
                   offset="0%"
-                  stopColor={settings.darkMode ? "#60a5fa" : "#3b82f6"}
+                  stopColor={settings.darkmode ? "#60a5fa" : "#3b82f6"}
                 />
                 <stop
                   offset="100%"
-                  stopColor={settings.darkMode ? "#818cf8" : "#6366f1"}
+                  stopColor={settings.darkmode ? "#818cf8" : "#6366f1"}
                 />
               </linearGradient>
             </defs>

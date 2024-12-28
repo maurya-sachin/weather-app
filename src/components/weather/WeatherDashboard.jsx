@@ -23,7 +23,11 @@ const WeatherDashboard = () => {
   );
   const [loading, setLoading] = useState(true);
   const [location, setLocation] = useState({ lat: null, lon: null });
-  const { settings, convertTemp } = useSettings();
+  const { settings, convertTemp, updateSettings } = useSettings();
+
+  useEffect(() => {
+    setSavedCities(settings.savedcities);
+  }, [settings.savedcities]);
 
   // Get user's geolocation if no city is selected
   useEffect(() => {
@@ -77,17 +81,20 @@ const WeatherDashboard = () => {
   }, []);
 
   const handleSaveCity = () => {
-    if (!savedCities.includes(city)) {
-      const newSavedCities = [...savedCities, city];
-      setSavedCities(newSavedCities);
-      localStorage.setItem("savedCities", JSON.stringify(newSavedCities));
+    if (!settings.savedcities.includes(city)) {
+      const newSavedCities = [...settings.savedcities, city];
+      updateSettings({ ...settings, savedcities: newSavedCities });
     }
   };
 
   const handleDeleteCity = (cityToDelete) => {
-    const newSavedCities = savedCities.filter((city) => city !== cityToDelete);
-    setSavedCities(newSavedCities);
-    localStorage.setItem("savedCities", JSON.stringify(newSavedCities));
+    const newSavedCities = settings.savedcities.filter(
+      (city) => city !== cityToDelete
+    );
+
+    // Update settings in context and save to DB
+    const updatedSettings = { ...settings, savedcities: newSavedCities };
+    updateSettings(updatedSettings);
   };
 
   if (loading) {
