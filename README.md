@@ -2,32 +2,32 @@
 
 ## Overview
 
-WeatherAffair is a modern weather application built with React, Vite, and Tailwind CSS. It provides users with accurate and real-time weather data, intuitive visualizations, and essential information like air quality, sunrise/sunset timings, and more. This project exemplifies my expertise in creating responsive, high-performance web applications with clean, accessible, and user-friendly designs.
+**WeatherAffair** is a modern weather application built with React, Vite, and Tailwind CSS. It provides users with accurate, real-time weather data, intuitive visualizations, and essential information like air quality, sunrise/sunset timings, and more. This project showcases my expertise in creating responsive, high-performance web applications with clean, accessible, and user-friendly designs.
+
+You can view the live version of the app here: [WeatherAffair](https://weatheraffair.vercel.app/)
 
 ## Key Features
 
-- **Real-time Weather Data**:
+- **Real-time Weather Data**:  
   Displays temperature, feels-like temperature, wind speed, humidity, pressure, and UV index.
-- **7-Day Weather Forecast**:
+- **7-Day Weather Forecast**:  
   Offers a detailed forecast for the next seven days.
-- **Interactive Temperature Charts**:
+- **Interactive Temperature Charts**:  
   Visualizes temperature trends over time.
-- **Air Quality Data**:
+- **Air Quality Data**:  
   Includes detailed air quality information where available.
-- **Sunrise & Sunset Times**:
+- **Sunrise & Sunset Times**:  
   Provides accurate daily timings for sunrise and sunset.
-- **City Search with Auto-Suggestions**:
+- **City Search with Auto-Suggestions**:  
   Allows users to quickly search for and view weather data for any location.
-- **Weather Maps**:
+- **Weather Maps**:  
   Powered by Leaflet.js for an interactive view of weather patterns.
-- **Customizable Settings**:
-
-  - Light and dark mode support for better readability.
-  - Temperature display in Celsius or Fahrenheit.
+- **Customizable Settings**:  
+  - Light and dark mode support for better readability.  
+  - Temperature display in Celsius or Fahrenheit.  
   - Option to save favorite cities for quick access.
-
-- **PWA Features**:
-  - Installable as a Progressive Web App for offline use.
+- **PWA Features**:  
+  - Installable as a Progressive Web App for offline use.  
   - Service workers enhance performance and caching capabilities.
 
 ## Technologies Used
@@ -85,7 +85,7 @@ weather-affair/
    npm install
    ```
 
-3. **Create a `.env` file**:
+3. **Create a `.env` file**:  
    Add your OpenWeatherMap API key in a `.env` file at the root of the project:
 
    ```env
@@ -104,14 +104,15 @@ weather-affair/
    npm run build
    ```
 
-6. **Preview the Production Build:**
+6. **Preview the Production Build**:
+
    ```bash
    npm run preview
    ```
 
 ## Contributing
 
-Contributions are welcome! If you’d like to improve this project, feel free to submit a pull request or open an issue.
+Contributions are welcome! If you'd like to improve this project, feel free to submit a pull request or open an issue.
 
 ## Acknowledgments
 
